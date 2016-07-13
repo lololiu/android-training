@@ -1,1 +1,1 @@
-include ':train-content-sharing'
+include ':train-content-sharing', ':train-graphics-animation'
