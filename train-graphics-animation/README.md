@@ -2,7 +2,7 @@
 
 ### Loading Large Bitmaps Efficiently
 有效地加载大图片
-```
+```java
 //获取图片的信息 设置inJustDecodeBounds为true时，会使BitmapFactory.decodeResource返回的bitmap对象为null
 //即该方法不会怎么返回一个Bitmap对象，但是会返回图片的宽高、类型信息
 BitmapFactory.Options options = new BitmapFactory.Options();
@@ -14,7 +14,7 @@ String imageType = options.outMimeType;
 ```
 上图代码相当于“测量”一张图片的大小，当宽高太大时，则要把它适当地缩小，不然加载的Bitmap太大容易造成OOM
 
-```
+```java
 //根据提供大小计算缩放比例
 public static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -40,7 +40,7 @@ public static int calculateInSampleSize(
 }
 ```
 **Note**:测量图片大小时，inJustDecodeBounds为true，当缩小一定比例时获取Bitmap放入ImageView时，需要将inJustDecodeBounds改回false。
-```
+```java
 public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
         int reqWidth, int reqHeight) {
 
@@ -70,7 +70,7 @@ mImageView.setImageBitmap(
 
 ### Caching Bitmaps
 内存缓存：
-```
+```java
 private LruCache<String, Bitmap> mMemoryCache;
 
 @Override

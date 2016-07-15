@@ -3,4 +3,4 @@
 
 * [Building Apps with Content Sharing](https://github.com/lololiu/android-training/tree/master/train-content-sharing)
 
-* Building Apps with Graphics & Animation
+* [Building Apps with Graphics & Animation](https://github.com/lololiu/android-training/tree/master/train-graphics-animation)
