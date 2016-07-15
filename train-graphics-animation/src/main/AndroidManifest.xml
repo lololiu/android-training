@@ -15,7 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoadLargeBitmapActivty"></activity>
+        <activity android:name=".LoadLargeBitmapActivty" />
+        <activity android:name=".ProcessBitmapWithAsyncTask" />
+        <activity android:name=".CachingBitmapActivity"></activity>
     </application>
 
 </manifest>

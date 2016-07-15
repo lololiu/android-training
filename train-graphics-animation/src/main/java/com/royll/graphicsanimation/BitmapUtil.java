@@ -4,9 +4,10 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.SeekBar;
 
 /**
- * Created by liulou on 2016/7/13.
+ * Created by Roy on 2016/7/13.
  * desc:
  */
 public class BitmapUtil {
@@ -16,7 +17,6 @@ public class BitmapUtil {
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
-
         if (height > reqHeight || width > reqWidth) {
 
             final int halfHeight = height / 2;
