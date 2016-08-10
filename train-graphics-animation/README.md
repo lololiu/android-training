@@ -109,4 +109,3 @@ public Bitmap getBitmapFromMemCache(String key) {
 磁盘缓存：
 [推荐阅读blog](http://blog.csdn.net/guolin_blog/article/details/28863651)
 
-### Managing Bitmap Memory

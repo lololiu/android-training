@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mLoadBigBitMapBtn;
     private Button mProcessBitmapWithAsyncTaskBtn;
     private Button mCachingBitmap;
-
+    private Button mCreateSceneApplyTranstion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,9 +19,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mLoadBigBitMapBtn = (Button) findViewById(R.id.load_large_bitmap_btn);
         mProcessBitmapWithAsyncTaskBtn = (Button) findViewById(R.id.process_bitmap_with_asynctask);
         mCachingBitmap= (Button) findViewById(R.id.caching_bitmap);
+        mCreateSceneApplyTranstion= (Button) findViewById(R.id.create_scene_and_apply_transition);
         mLoadBigBitMapBtn.setOnClickListener(this);
         mProcessBitmapWithAsyncTaskBtn.setOnClickListener(this);
         mCachingBitmap.setOnClickListener(this);
+        mCreateSceneApplyTranstion.setOnClickListener(this);
     }
 
     @Override
@@ -35,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.caching_bitmap:
                 startActivityHelp(CachingBitmapActivity.class);
+                break;
+            case R.id.create_scene_and_apply_transition:
+                startActivityHelp(CreateSceneTransitionsActivity.class);
                 break;
         }
     }

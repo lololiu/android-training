@@ -35,4 +35,15 @@
         android:layout_height="wrap_content"
         android:text="Caching Bitmap"
         android:textAllCaps="false" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Animating Views Using Scenes and Transitions" />
+    <Button
+        android:id="@+id/create_scene_and_apply_transition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Creating a Scene and Applying a Transition"
+        android:textAllCaps="false" />
 </LinearLayout>

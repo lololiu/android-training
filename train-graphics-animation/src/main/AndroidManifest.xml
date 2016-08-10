@@ -18,6 +18,7 @@
         <activity android:name=".LoadLargeBitmapActivty" />
         <activity android:name=".ProcessBitmapWithAsyncTask" />
         <activity android:name=".CachingBitmapActivity"></activity>
+        <activity android:name=".CreateSceneTransitionsActivity"/>
     </application>
 
 </manifest>
