@@ -109,3 +109,226 @@ public Bitmap getBitmapFromMemCache(String key) {
 磁盘缓存：
 [推荐阅读blog](http://blog.csdn.net/guolin_blog/article/details/28863651)
 
+# Animating Views Using Scenes and Transitions
+
+> Android includes the transitions framework, which enables you to easily animate changes between two view hierarchies. The framework animates the views at runtime by changing some of their property values over time. The framework includes built-in animations for common effects and lets you create custom animations and transition lifecycle callbacks.
+
+### The Transitions Framework
+
+该框架具备以下一些特性：
+* 群组级别的动画：可以为整个视图结构中的所有子View添加一个或多个动画效果。
+* 基于转换的动画：基于View属性的初始值和结束值来执行动画。
+* 内置的动画效果：包含了预设的通用动画效果，例如渐隐或者移动。
+* 支持资源文件：可以从资源文件中加载View结构和内置动画。
+* 生命周期回调：为整个动画过程和视图结构变化过程提供便于控制的回调方法。
+  概览
+
+Transitions框架的局限性：
+* 对SurfaceView应用动画可能无法被正确显示。SurfaceView实例是通过一个非UI进程来更新的，所以SurfaceView的更新可能与其他的View不同步。
+* 当某些专场类型被应用在TextureView上时可能无法获得预期效果
+* AdapterView的子类，比如ListView，它们管理子View的方式导致无法应用转场效果。如果要对AdapterView的子类应用专场可能会知道设备显示被挂起。
+* 当试图对TextView应用缩放动画的时候，其中的文本内容可能在TextView对象还没有完全完成缩放之前就跳到一个新的位置上。为了避免这个问题，不要对包含文本内容的View应用缩放动画。
+
+### Creating a Scene
+* 通过xml定义Scene
+`res/layout/activity_main.xml`
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/master_layout">
+    <TextView
+        android:id="@+id/title"
+        ...
+        android:text="Title"/>
+    <FrameLayout
+        android:id="@+id/scene_root">
+        <include layout="@layout/a_scene" />
+    </FrameLayout>
+</LinearLayout>
+```
+
+`res/layout/a_scene.xml`
+```xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scene_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <TextView
+        android:id="@+id/text_view1
+        android:text="Text Line 1" />
+    <TextView
+        android:id="@+id/text_view2
+        android:text="Text Line 2" />
+</RelativeLayout>
+```
+
+`res/layout/another_scene.xml`
+```xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scene_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <TextView
+        android:id="@+id/text_view2
+        android:text="Text Line 2" />
+    <TextView
+        android:id="@+id/text_view1
+        android:text="Text Line 1" />
+</RelativeLayout>
+```
+
+```java
+Scene mAScene;
+Scene mAnotherScene;
+
+// Create the scene root for the scenes in this app
+mSceneRoot = (ViewGroup) findViewById(R.id.scene_root);
+
+// Create the scenes
+mAScene = Scene.getSceneForLayout(mSceneRoot, R.layout.a_scene, this);
+mAnotherScene =
+    Scene.getSceneForLayout(mSceneRoot, R.layout.another_scene, this);
+```
+
+注：
+* 两个scene中的控件id需一致
+* 大多数情况下，不需要显式地创建一个开始场景。如果应用了一个转场，框架会把之前的结束场景用作后续转场的开始场景。如果之前没有应用过转场，框架会搜集当前屏幕中视图结构的状态作为开始场景。
+
+### Applying a Transition
+在xml中创建Transition
+```xml
+<fade xmlns:android="http://schemas.android.com/apk/res/android" />
+```
+
+```java
+Transition mFadeTransition =
+        TransitionInflater.from(this).
+        inflateTransition(R.transition.fade_transition);
+```
+在代码中创建Transition
+```java
+Transition mFadeTransition = new Fade();
+```
+
+提交Transition
+```
+TransitionManager.go(mEndingScene, mFadeTransition);
+```
+
+创建多个Transition效果
+```xml
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+    android:transitionOrdering="sequential">
+    <fade android:fadingMode="fade_out" />
+    <changeBounds />
+    <fade android:fadingMode="fade_in" />
+</transitionSet>
+```
+
+不创建Scene使用Transition
+```xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <EditText
+        android:id="@+id/inputText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    ...
+</RelativeLayout>
+```
+
+```java
+private TextView mLabelText;
+private Fade mFade;
+private ViewGroup mRootView;
+...
+
+// Load the layout
+this.setContentView(R.layout.activity_main);
+...
+
+// Create a new TextView and set some View properties
+mLabelText = new TextView();
+mLabelText.setText("Label").setId("1");
+
+// Get the root view and create a transition
+mRootView = (ViewGroup) findViewById(R.id.mainLayout);
+mFade = new Fade(IN);
+
+// Start recording changes to the view hierarchy
+TransitionManager.beginDelayedTransition(mRootView, mFade);
+
+// Add the new TextView to the view hierarchy
+mRootView.addView(mLabelText);
+
+// When the system redraws the screen to show this update,
+// the framework will animate the addition as a fade in
+```
+
+### Creating Custom Transitions
+继承Transition
+```java
+public class CustomTransition extends Transition {
+
+    @Override
+    public void captureStartValues(TransitionValues values) {}
+
+    @Override
+    public void captureEndValues(TransitionValues values) {}
+
+    @Override
+    public Animator createAnimator(ViewGroup sceneRoot,
+                                   TransitionValues startValues,
+                                   TransitionValues endValues) {}
+}
+```
+
+自定义TransitionValues键值对名称格式
+> package_name:transition_name:property_name
+
+比如:
+> com.example.android.customtransition:CustomTransition:background
+
+捕捉开始值和结束值
+```java
+public class CustomTransition extends Transition {
+
+    // Define a key for storing a property value in
+    // TransitionValues.values with the syntax
+    // package_name:transition_class:property_name to avoid collisions
+    private static final String PROPNAME_BACKGROUND =
+            "com.example.android.customtransition:CustomTransition:background";
+
+    @Override
+    public void captureStartValues(TransitionValues transitionValues) {
+        // Call the convenience method captureValues
+        captureValues(transitionValues);
+    }
+
+
+    // For the view in transitionValues.view, get the values you
+    // want and put them in transitionValues.values
+    private void captureValues(TransitionValues transitionValues) {
+        // Get a reference to the view
+        View view = transitionValues.view;
+        // Store its background property in the values map
+        transitionValues.values.put(PROPNAME_BACKGROUND, view.getBackground());
+    }
+    ...
+}
+```
+
+createAnimator创建自定义动画
+> 为了给开始场景和结束场景中的View添加动画效果，还需要重写createAnimator()方法提供一个animator对象。当框架调用该方法时，将传递两个参数：场景根视图和包含了开始场景和结束场景中捕捉到的熟知的TransitionValues对象。
+> 框架调用createAnimator()方法的次数取决于开始场景和结束场景发生变化的次数。例如，考虑一个渐隐/渐显动画是作为一个自定义动画存在的，如果开始场景中有5个View，在结束场景中将移除其中2个，同时添加一个新的View，那么框架将调用createAnimator()方法6 次：
+
+> * 同时存在于开始场景和结束场景内的View调用渐隐j/渐显效果，共3次。
+> * 结束场景中被移除的View添加渐隐效果（共2次）
+> * 结束场景中新加入的View添加渐显效果（共1次）
+
+> 对于同时存在于开始场景和结束场景中的View来说。框架为初始值和结束值各自提供了一个TransitionValues对象参数。对于只在开始场景或者结束场景中存在的的View，框架提供一个TransitionValues对象，其中只有先关的TransitionValues会被添加合适的参数，另一个将被设置为null。例如对于只在开始场景中存在的View，重写createAnimator时获取到的TransitionValues对象中只有初始值列表被记录了相关数据，而结束值列表为空，因为该View已经不会显示在结束场景中。
+
+> 当创建自定义转场的时候，实现createAnimator(ViewGroup, TransitionValues, TransitionValues) 方法，使用捕捉到的属性值来创建一个Animator对象并返回给狂框架。
