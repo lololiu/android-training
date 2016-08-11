@@ -46,4 +46,39 @@
         android:layout_height="wrap_content"
         android:text="Creating a Scene and Applying a Transition"
         android:textAllCaps="false" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Adding Animations" />
+    <Button
+        android:id="@+id/crossfading_two_views_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crossfading Two Views"
+        android:textAllCaps="false" />
+    <Button
+        android:id="@+id/using_viewpager_for_screen_slides_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Using ViewPager for Screen Slides"
+        android:textAllCaps="false" />
+    <Button
+        android:id="@+id/card_flip_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Displaying Card Flip Animations"
+        android:textAllCaps="false" />
+    <Button
+        android:id="@+id/zoom_view_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zooming a View"
+        android:textAllCaps="false" />
+    <Button
+        android:id="@+id/layout_change_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Animating Layout Changes"
+        android:textAllCaps="false" />
 </LinearLayout>

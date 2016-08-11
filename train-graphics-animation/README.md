@@ -332,3 +332,9 @@ createAnimator创建自定义动画
 > 对于同时存在于开始场景和结束场景中的View来说。框架为初始值和结束值各自提供了一个TransitionValues对象参数。对于只在开始场景或者结束场景中存在的的View，框架提供一个TransitionValues对象，其中只有先关的TransitionValues会被添加合适的参数，另一个将被设置为null。例如对于只在开始场景中存在的View，重写createAnimator时获取到的TransitionValues对象中只有初始值列表被记录了相关数据，而结束值列表为空，因为该View已经不会显示在结束场景中。
 
 > 当创建自定义转场的时候，实现createAnimator(ViewGroup, TransitionValues, TransitionValues) 方法，使用捕捉到的属性值来创建一个Animator对象并返回给狂框架。
+
+兼容库：[Transitions-Everywhere](https://github.com/andkulikov/Transitions-Everywhere)
+
+
+# Adding Animations
+

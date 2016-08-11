@@ -19,6 +19,8 @@
         <activity android:name=".ProcessBitmapWithAsyncTask" />
         <activity android:name=".CachingBitmapActivity"></activity>
         <activity android:name=".CreateSceneTransitionsActivity"/>
+        <activity android:name=".add_animations.CrossFadingTwoViewsActicvity"/>
+        <activity android:name=".add_animations.ViewPagerScreenSlideActivity"/>
     </application>
 
 </manifest>
