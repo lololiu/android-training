@@ -338,3 +338,74 @@ createAnimator创建自定义动画
 
 # Adding Animations
 
+### Crossfading Two Views
+属性动画设置View Alpha值
+```java
+private void crossfade() {
+
+    // Set the content view to 0% opacity but visible, so that it is visible
+    // (but fully transparent) during the animation.
+    mContentView.setAlpha(0f);
+    mContentView.setVisibility(View.VISIBLE);
+
+    // Animate the content view to 100% opacity, and clear any animation
+    // listener set on the view.
+    mContentView.animate()
+            .alpha(1f)
+            .setDuration(mShortAnimationDuration)
+            .setListener(null);
+
+    // Animate the loading view to 0% opacity. After the animation ends,
+    // set its visibility to GONE as an optimization step (it won't
+    // participate in layout passes, etc.)
+    mLoadingView.animate()
+            .alpha(0f)
+            .setDuration(mShortAnimationDuration)
+            .setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLoadingView.setVisibility(View.GONE);
+                }
+            });
+}
+```
+
+### Using ViewPager for Screen Slides
+利用PageTransformer来自定义ViewPager滑动动画
+```
+public void transformPage(View view, float position) {
+
+}
+```
+position图解
+![图片来自网络](https://github.com/lololiu/android-training/raw/master/images/position图解.png)
+
+代码:
+```java
+public class RoratePageTransformer implements ViewPager.PageTransformer {
+    private static final float MIN_SCALE = 0.75f;
+
+    public void transformPage(View view, float position) {
+        int pageWidth = view.getWidth();
+
+        if (position < -1) { // [-Infinity,-1)
+            // This page is way off-screen to the left.
+            view.setAlpha(0);
+
+        } else if (position <= 0) { // [-1,0]
+            // Use the default slide transition when moving to the left page
+            view.setAlpha(position+1);
+        } else if (position <= 1) { // (0,1]
+            // Fade the page out.
+            view.setAlpha(1 - position);
+            view.setRotation((1-position)*360);
+            view.setScaleX(1-position);
+            view.setScaleY(1-position);
+
+        } else { // (1,+Infinity]
+            // This page is way off-screen to the right.
+            view.setAlpha(0);
+        }
+    }
+}
+```
