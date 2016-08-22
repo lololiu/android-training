@@ -21,6 +21,7 @@
         <activity android:name=".CreateSceneTransitionsActivity"/>
         <activity android:name=".add_animations.CrossFadingTwoViewsActicvity"/>
         <activity android:name=".add_animations.ViewPagerScreenSlideActivity"/>
+        <activity android:name=".add_animations.DisplayCardFlipActivity"/>
     </application>
 
 </manifest>

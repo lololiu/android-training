@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.royll.graphicsanimation.add_animations.CrossFadingTwoViewsActicvity;
+import com.royll.graphicsanimation.add_animations.DisplayCardFlipActivity;
 import com.royll.graphicsanimation.add_animations.ViewPagerScreenSlideActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.using_viewpager_for_screen_slides_btn:
                 startActivityHelp(ViewPagerScreenSlideActivity.class);
+                break;
+            case R.id.card_flip_btn:
+                startActivityHelp(DisplayCardFlipActivity.class);
                 break;
             default:
                 break;
