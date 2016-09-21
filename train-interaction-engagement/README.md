@@ -6,11 +6,11 @@
 
     使用[ViewPager](https://developer.android.com/reference/android/support/v4/view/ViewPager.html)来进行多界面滑动切换
     两种适配器：
-    1. [FragmentPagerAdapter](https://developer.android.com/reference/android/support/v4/app/FragmentPagerAdapter.html)
+    **[FragmentPagerAdapter](https://developer.android.com/reference/android/support/v4/app/FragmentPagerAdapter.html)**
 
     > This is best when navigating between sibling screens representing a fixed, small number of pages.
 
-    2. [FragmentStatePagerAdapter](https://developer.android.com/reference/android/support/v4/app/FragmentStatePagerAdapter.html)
+    **[FragmentStatePagerAdapter](https://developer.android.com/reference/android/support/v4/app/FragmentStatePagerAdapter.html)**
 
     > This is best for paging across a collection of objects for which the number of pages is undetermined. It destroys fragments as the user navigates to other pages, minimizing memory usage.
 
@@ -504,6 +504,7 @@
     调用getSearchableInfo()返回一个SearchableInfo由检索配置XML文件创建的对象。检索配置与SearchView正确关联后，当用户提交一个搜索请求时，SearchView会以ACTION_SEARCH intent启动一个activity。所以你现在需要一个能过滤这个intent和处理搜索请求的activity。
 
     **创建一个检索activity**
+
     当用户提交一个搜索请求时，SearchView会尝试以ACTION_SEARCH启动一个activity。检索activity会过滤ACTION_SEARCH intent并在某种数据集中根据请求进行搜索。要创建一个检索activity，在你选择的activity中声明对ACTION_SEARCH intent过滤:
 
     ```xml
